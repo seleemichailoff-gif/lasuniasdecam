@@ -342,13 +342,6 @@ footer{
   margin-bottom:40px;
 }
 
-
-/*
-  Portfolio compacto:
-  muchas fotos visibles sin
-  hacer interminable la página.
-*/
-
 .gallery-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
@@ -358,31 +351,21 @@ footer{
 
 .gallery-item{
   position:relative;
-
   height:285px;
-
   margin:0;
-
   overflow:hidden;
-
   background:#f5eef2;
-
   border-radius:18px;
-
   box-shadow:
     0 12px 35px rgba(80,50,70,.07);
-
   cursor:pointer;
 }
 
 .gallery-item img{
   width:100%;
   height:100%;
-
   display:block;
-
   object-fit:cover;
-
   transition:
     transform .45s ease,
     opacity .3s ease;
@@ -390,6 +373,44 @@ footer{
 
 .gallery-item:hover img{
   transform:scale(1.045);
+}
+
+
+/* =========================
+   BOTÓN VER TODOS
+========================= */
+
+.gallery-more{
+  display:flex;
+  justify-content:center;
+  margin-top:32px;
+}
+
+.gallery-toggle{
+  appearance:none;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--text);
+
+  padding:13px 22px;
+
+  border-radius:999px;
+
+  font-family:Arial,Helvetica,sans-serif;
+  font-size:13px;
+
+  cursor:pointer;
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    background .25s ease;
+}
+
+.gallery-toggle:hover{
+  transform:translateY(-2px);
+  border-color:#d7bdca;
+  background:#fffafb;
 }
 
 
@@ -711,6 +732,15 @@ footer a:hover{
   .gallery-item{
     height:205px;
     border-radius:14px;
+  }
+
+  .gallery-more{
+    margin-top:26px;
+  }
+
+  .gallery-toggle{
+    padding:12px 19px;
+    font-size:12px;
   }
 
 
