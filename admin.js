@@ -4,6 +4,9 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   'sb_publishable_3W1TRYwdtncqHEBe8BjIUw_9sYl2Cce';
 
+const SITE_URL =
+  'https://lasuniasdecam.vercel.app';
+
 const { createClient } = await import(
   'https://esm.sh/@supabase/supabase-js@2'
 );
@@ -28,6 +31,10 @@ const esc = (s) =>
     .replaceAll('"', '&quot;');
 
 
+/* =========================
+   ADMIN CHECK
+========================= */
+
 async function isAdmin() {
 
   const {
@@ -49,7 +56,10 @@ async function isAdmin() {
   } = await sb
     .from('admin_users')
     .select('email')
-    .ilike('email', session.user.email)
+    .ilike(
+      'email',
+      session.user.email
+    )
     .maybeSingle();
 
   if (error) {
@@ -59,6 +69,10 @@ async function isAdmin() {
   return !!admin;
 }
 
+
+/* =========================
+   LOAD PANEL
+========================= */
 
 async function load() {
 
@@ -102,7 +116,9 @@ async function load() {
 }
 
 
-/* LOGIN */
+/* =========================
+   LOGIN
+========================= */
 
 $('#loginForm').addEventListener(
   'submit',
@@ -173,7 +189,9 @@ $('#loginForm').addEventListener(
 );
 
 
-/* RECUPERAR CONTRASEÑA */
+/* =========================
+   RECUPERAR CONTRASEÑA
+========================= */
 
 $('#forgotPassword').addEventListener(
   'click',
@@ -203,7 +221,7 @@ $('#forgotPassword').addEventListener(
         email,
         {
           redirectTo:
-            `${window.location.origin}/admin.html`
+            `${SITE_URL}/admin.html`
         }
       );
 
@@ -231,7 +249,9 @@ $('#forgotPassword').addEventListener(
 );
 
 
-/* RECUPERACIÓN DE CONTRASEÑA */
+/* =========================
+   PASSWORD RECOVERY
+========================= */
 
 sb.auth.onAuthStateChange(
   async (event, session) => {
@@ -259,34 +279,47 @@ sb.auth.onAuthStateChange(
         return;
       }
 
-      const {
-        error
-      } = await sb.auth.updateUser({
-        password: newPassword
-      });
+      try {
 
-      if (error) {
+        const {
+          error
+        } = await sb.auth.updateUser({
+          password: newPassword
+        });
+
+        if (error) {
+          throw error;
+        }
 
         alert(
-          error.message ||
+          'Contraseña actualizada correctamente.'
+        );
+
+        await load();
+
+      } catch (error) {
+
+        console.error(
+          'Error cambiando contraseña:',
+          error
+        );
+
+        alert(
+          error?.message ||
           'No se pudo cambiar la contraseña.'
         );
 
-        return;
       }
 
-      alert(
-        'Contraseña actualizada correctamente.'
-      );
-
-      await load();
     }
 
   }
 );
 
 
-/* LOGOUT */
+/* =========================
+   LOGOUT
+========================= */
 
 $('#logout').addEventListener(
   'click',
@@ -300,7 +333,9 @@ $('#logout').addEventListener(
 );
 
 
-/* STORAGE */
+/* =========================
+   UPLOAD STORAGE
+========================= */
 
 async function uploadImage(
   file,
@@ -332,9 +367,15 @@ async function uploadImage(
 }
 
 
-/* REFRESH */
+/* =========================
+   REFRESH PANEL
+========================= */
 
 async function refresh() {
+
+  /* =========================
+     GALERÍA
+  ========================= */
 
   const {
     data,
@@ -459,7 +500,9 @@ async function refresh() {
     );
 
 
-  /* SETTINGS */
+  /* =========================
+     DATOS DEL SITIO
+  ========================= */
 
   const {
     data: settings,
@@ -488,7 +531,9 @@ async function refresh() {
   }
 
 
-  /* SERVICES */
+  /* =========================
+     SERVICIOS
+  ========================= */
 
   const {
     data: services,
@@ -587,7 +632,9 @@ async function refresh() {
       .join('');
 
 
-  /* SERVICE UPLOAD */
+  /* =========================
+     SUBIR FOTO DE SERVICIO
+  ========================= */
 
   document
     .querySelectorAll('.service-file')
@@ -689,7 +736,9 @@ async function refresh() {
     );
 
 
-  /* SERVICE DELETE */
+  /* =========================
+     ELIMINAR FOTO DE SERVICIO
+  ========================= */
 
   document
     .querySelectorAll(
@@ -773,7 +822,9 @@ async function refresh() {
 }
 
 
-/* GALERÍA */
+/* =========================
+   GALERÍA - SUBIR FOTOS
+========================= */
 
 $('#files').addEventListener(
   'change',
@@ -856,7 +907,9 @@ $('#files').addEventListener(
 );
 
 
-/* SETTINGS SAVE */
+/* =========================
+   GUARDAR DATOS
+========================= */
 
 $('#settingsForm').addEventListener(
   'submit',
@@ -898,6 +951,8 @@ $('#settingsForm').addEventListener(
 );
 
 
-/* START */
+/* =========================
+   INICIAR
+========================= */
 
 await load();
