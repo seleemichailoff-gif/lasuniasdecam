@@ -299,17 +299,8 @@ footer{
 .service-image img{
   width:100%;
   height:100%;
-  display:block;
   object-fit:cover;
-  object-position:
-    var(--service-x,50%)
-    var(--service-y,50%);
-  transform:
-    scale(var(--service-zoom,1));
-  transform-origin:center center;
-  transition:
-    transform .35s ease,
-    object-position .35s ease;
+  display:block;
 }
 
 .service-copy{
@@ -639,6 +630,9 @@ footer a:hover{
     width:min(100% - 30px,1180px);
   }
 
+
+  /* NAV */
+
   .nav{
     min-height:76px;
   }
@@ -655,6 +649,9 @@ footer a:hover{
     padding:10px 14px;
     font-size:12px;
   }
+
+
+  /* HERO */
 
   .hero{
     min-height:auto;
@@ -687,6 +684,7 @@ footer a:hover{
   .hero-logo-wrap{
     width:190px;
     height:190px;
+
     min-width:190px;
     min-height:190px;
   }
@@ -694,9 +692,13 @@ footer a:hover{
   .hero-logo{
     width:190px;
     height:190px;
+
     max-width:190px;
     max-height:190px;
   }
+
+
+  /* SERVICIOS */
 
   .services{
     padding:80px 0;
@@ -710,6 +712,9 @@ footer a:hover{
   .service-image{
     height:240px;
   }
+
+
+  /* GALERÍA */
 
   .gallery{
     padding:80px 0;
@@ -738,6 +743,9 @@ footer a:hover{
     font-size:12px;
   }
 
+
+  /* ABOUT */
+
   .about{
     grid-template-columns:1fr;
     gap:35px;
@@ -749,6 +757,9 @@ footer a:hover{
     border-radius:18px;
   }
 
+
+  /* FINAL */
+
   .final{
     padding:90px 0;
   }
@@ -756,6 +767,9 @@ footer a:hover{
   .final h2{
     font-size:48px;
   }
+
+
+  /* FOOTER */
 
   footer{
     min-height:80px;
@@ -781,6 +795,7 @@ footer a:hover{
   .hero-logo-wrap{
     width:165px;
     height:165px;
+
     min-width:165px;
     min-height:165px;
   }
@@ -788,6 +803,7 @@ footer a:hover{
   .hero-logo{
     width:165px;
     height:165px;
+
     max-width:165px;
     max-height:165px;
   }
@@ -803,169 +819,6 @@ footer a:hover{
 
   .about-note{
     height:250px;
-  }
-
-}
-
-
-/* =====================================================
-   EDITOR DE ENCUADRE — SOLO PARA EL PANEL
-   No modifica el diseño público.
-===================================================== */
-
-.service-crop-editor{
-  margin-top:14px;
-  padding:14px;
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:#fff;
-}
-
-.service-crop-editor[hidden]{
-  display:none;
-}
-
-.service-crop-preview{
-  width:100%;
-  height:180px;
-  overflow:hidden;
-  border-radius:12px;
-  background:var(--pink-soft);
-  margin-bottom:14px;
-}
-
-.service-crop-preview img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  object-position:50% 50%;
-  transform-origin:center center;
-}
-
-.service-crop-tools{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.service-crop-title{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-
-.service-crop-title strong{
-  font-size:13px;
-  font-weight:600;
-}
-
-.service-close-adjust{
-  border:0;
-  background:transparent;
-  color:var(--muted);
-  font-size:12px;
-  cursor:pointer;
-  padding:3px;
-}
-
-.crop-control{
-  display:block;
-}
-
-.crop-control > span{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:4px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.crop-control input[type="range"]{
-  display:block;
-  width:100%;
-  margin:0;
-  accent-color:var(--accent);
-}
-
-.service-crop-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:8px;
-  margin-top:3px;
-}
-
-.service-reset-crop,
-.service-save-crop,
-.service-adjust{
-  cursor:pointer;
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-.service-reset-crop{
-  border:1px solid var(--line);
-  background:#fff;
-  color:var(--muted);
-  border-radius:9px;
-  padding:8px 11px;
-  font-size:11px;
-}
-
-.service-save-crop{
-  border:0;
-  background:var(--text);
-  color:#fff;
-  border-radius:9px;
-  padding:8px 12px;
-  font-size:11px;
-}
-
-.service-adjust{
-  display:inline-flex;
-  align-items:center;
-  padding:7px 11px;
-  margin-top:10px;
-  margin-right:7px;
-  border:1px solid var(--line);
-  border-radius:9px;
-  background:#fff;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.service-close-adjust:hover,
-.service-adjust:hover,
-.service-reset-crop:hover{
-  color:var(--text);
-}
-
-.service-save-crop:hover{
-  opacity:.9;
-}
-
-.service-crop-editor .form-msg{
-  margin:0;
-  font-size:11px;
-}
-
-@media(max-width:700px){
-
-  .service-crop-preview{
-    height:170px;
-  }
-
-  .service-crop-editor{
-    padding:12px;
-  }
-
-  .service-crop-actions{
-    justify-content:stretch;
-  }
-
-  .service-reset-crop,
-  .service-save-crop{
-    flex:1;
   }
 
 }
