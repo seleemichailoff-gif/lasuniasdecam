@@ -1146,3 +1146,139 @@ input{
   }
 
 }
+/* =========================
+   AJUSTE DE FOTOS
+========================= */
+
+.service-adjust{
+  border:0;
+  background:none;
+  color:var(--muted);
+  font-size:12px;
+  padding:10px 0;
+  cursor:pointer;
+  display:block
+}
+
+.service-crop-editor{
+  margin-top:18px;
+  border-top:1px solid var(--line);
+  padding-top:18px
+}
+
+.service-crop-editor[hidden]{
+  display:none
+}
+
+.service-crop-preview{
+  width:100%;
+  aspect-ratio:1;
+  background:#f2e9ed;
+  overflow:hidden;
+  margin-bottom:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.service-crop-preview img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:50% 50%;
+  display:block;
+  transform-origin:center center;
+  transition:transform .08s ease-out
+}
+
+.service-crop-tools{
+  display:grid;
+  gap:14px
+}
+
+.service-crop-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  font-size:13px
+}
+
+.service-close-adjust{
+  border:0;
+  background:none;
+  color:var(--muted);
+  cursor:pointer;
+  font-size:12px;
+  padding:5px 0
+}
+
+.crop-control{
+  display:grid;
+  gap:7px
+}
+
+.crop-control > span{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:12px;
+  color:var(--muted)
+}
+
+.crop-control output{
+  color:var(--ink);
+  font-variant-numeric:tabular-nums
+}
+
+.crop-control input[type="range"]{
+  width:100%;
+  padding:0;
+  border:0;
+  background:transparent;
+  accent-color:#9b6178;
+  cursor:pointer
+}
+
+.service-crop-actions{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:4px
+}
+
+.service-reset-crop,
+.service-save-crop{
+  border:0;
+  cursor:pointer;
+  font-size:12px;
+  padding:10px 14px
+}
+
+.service-reset-crop{
+  background:#f2e9ed;
+  color:var(--ink)
+}
+
+.service-save-crop{
+  background:var(--ink);
+  color:#fff
+}
+
+@media(max-width:520px){
+
+  .service-crop-preview{
+    aspect-ratio:1
+  }
+
+  .service-crop-actions{
+    flex-direction:column;
+    align-items:stretch
+  }
+
+  .service-reset-crop,
+  .service-save-crop{
+    width:100%
+  }
+
+}
