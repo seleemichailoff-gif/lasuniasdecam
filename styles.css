@@ -296,11 +296,34 @@ footer{
   background:var(--pink-soft);
 }
 
+/*
+  Encuadre de cada foto de servicio.
+
+  Los valores vienen desde public.js:
+  --service-zoom
+  --service-x
+  --service-y
+*/
+
 .service-image img{
   width:100%;
   height:100%;
-  object-fit:cover;
   display:block;
+
+  object-fit:cover;
+
+  object-position:
+    var(--service-x,50%)
+    var(--service-y,50%);
+
+  transform:
+    scale(var(--service-zoom,1));
+
+  transform-origin:center center;
+
+  transition:
+    transform .35s ease,
+    object-position .35s ease;
 }
 
 .service-copy{
