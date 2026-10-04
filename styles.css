@@ -822,3 +822,327 @@ footer a:hover{
   }
 
 }
+/* =========================
+   ADMIN
+========================= */
+
+.admin-body{
+  min-height:100vh
+}
+
+.admin-shell{
+  max-width:1080px;
+  margin:auto;
+  padding:30px 25px 90px
+}
+
+.admin-top,
+.panel-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.admin-top>a:last-child,
+.ghost{
+  font-size:13px;
+  color:var(--muted);
+  background:none;
+  border:0;
+  cursor:pointer
+}
+
+.admin-card{
+  max-width:520px;
+  margin:100px auto;
+  padding:55px;
+  background:#fff;
+  border:1px solid var(--line)
+}
+
+.admin-card h1,
+.panel-head h1{
+  font:400 48px Georgia,serif;
+  margin:0 0 12px
+}
+
+.admin-card form,
+.settings form{
+  display:grid;
+  gap:17px;
+  margin-top:35px
+}
+
+label{
+  display:grid;
+  gap:7px;
+  font-size:12px;
+  color:var(--muted)
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid var(--line);
+  background:#fff;
+  font:inherit;
+  color:var(--text)
+}
+
+.form-msg{
+  font-size:12px;
+  color:#9b6178;
+  min-height:16px
+}
+
+.hidden{
+  display:none
+}
+
+.panel-head{
+  margin:65px 0 35px
+}
+
+.upload-box{
+  border:1px dashed #cdbdc6;
+  background:#fff;
+  min-height:150px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  text-align:center
+}
+
+.upload-box input{
+  display:none
+}
+
+.upload-box span{
+  font-size:30px
+}
+
+.upload-box strong{
+  font-size:14px;
+  margin-top:10px
+}
+
+.upload-box small{
+  color:var(--muted);
+  margin-top:5px
+}
+
+.admin-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:25px
+}
+
+.admin-item{
+  position:relative;
+  aspect-ratio:1;
+  background:#eee;
+  overflow:hidden
+}
+
+.admin-item img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.delete{
+  position:absolute;
+  top:8px;
+  right:8px;
+  border:0;
+  background:#fff;
+  padding:7px 10px;
+  cursor:pointer
+}
+
+
+/* =========================
+   ADMIN SERVICIOS
+========================= */
+
+.admin-section{
+  margin-top:70px
+}
+
+.admin-section-head h2{
+  font:400 clamp(34px,4vw,54px)/.95 Georgia,serif;
+  letter-spacing:-.04em;
+  margin:0
+}
+
+.service-admin-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:30px
+}
+
+.service-admin-card{
+  display:grid;
+  grid-template-columns:190px 1fr;
+  gap:22px;
+  background:#fff;
+  border:1px solid var(--line);
+  padding:14px
+}
+
+.service-admin-image{
+  aspect-ratio:1;
+  background:#f2e9ed;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  color:#a38e9b;
+  font-size:28px
+}
+
+.service-admin-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
+.service-admin-card h3{
+  font:400 27px Georgia,serif;
+  margin:0 0 8px
+}
+
+.service-admin-card .eyebrow{
+  margin-bottom:8px
+}
+
+.mini-upload{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 13px;
+  background:var(--text);
+  color:#fff;
+  font-size:12px;
+  cursor:pointer;
+  margin-top:8px
+}
+
+.mini-upload input{
+  display:none
+}
+
+.text-delete{
+  border:0;
+  background:none;
+  color:#9b6178;
+  font-size:12px;
+  padding:10px 0;
+  cursor:pointer;
+  display:block
+}
+
+
+/* =========================
+   IMÁGENES DESTACADAS
+========================= */
+
+.featured-admin-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:30px
+}
+
+.featured-admin-card{
+  background:#fff;
+  border:1px solid var(--line);
+  padding:18px
+}
+
+.featured-admin-card h3{
+  font:400 25px Georgia,serif;
+  margin:0 0 8px
+}
+
+.featured-admin-preview{
+  width:100%;
+  aspect-ratio:16/9;
+  background:#f2e9ed;
+  overflow:hidden;
+  margin-bottom:15px;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.featured-admin-preview img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block
+}
+
+
+/* =========================
+   SETTINGS
+========================= */
+
+.settings{
+  margin-top:80px;
+  padding-top:55px;
+  border-top:1px solid var(--line);
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:8vw
+}
+
+
+/* =========================
+   RESPONSIVE ADMIN
+========================= */
+
+@media(max-width:900px){
+
+  .service-admin-grid{
+    grid-template-columns:1fr
+  }
+
+  .featured-admin-grid{
+    grid-template-columns:1fr
+  }
+
+}
+
+@media(max-width:800px){
+
+  .admin-grid{
+    grid-template-columns:1fr 1fr
+  }
+
+  .settings{
+    grid-template-columns:1fr
+  }
+
+  .admin-card{
+    margin:55px auto;
+    padding:35px
+  }
+
+}
+
+@media(max-width:520px){
+
+  .admin-shell{
+    padding-left:18px;
+    padding-right:18px
+  }
+
+  .service-admin-card{
+    grid-template-columns:120px 1fr
+  }
+
+}
