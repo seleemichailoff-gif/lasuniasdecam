@@ -400,7 +400,6 @@ async function refresh() {
     throw error;
   }
 
-
   $('#adminGallery').innerHTML =
     (data || [])
       .map(
@@ -529,6 +528,453 @@ async function refresh() {
       settings.location || '';
 
   }
+
+
+  /* =========================
+     IMÁGENES DESTACADAS
+  ========================= */
+
+  $('#featuredImagesAdmin').innerHTML = `
+
+    <div class="featured-admin-grid">
+
+      <!-- SUPERIOR -->
+
+      <article class="featured-admin-card">
+
+        <div class="featured-admin-preview">
+
+          ${
+            settings?.hero_image_url
+              ? `
+                <img
+                  src="${esc(settings.hero_image_url)}"
+                  alt="Imagen superior"
+                >
+              `
+              : `
+                <div class="featured-admin-empty">
+                  <span>＋</span>
+                  <small>Sin imagen</small>
+                </div>
+              `
+          }
+
+        </div>
+
+        <div class="featured-admin-content">
+
+          <p class="eyebrow">
+            CARTEL SUPERIOR
+          </p>
+
+          <h3>
+            Lasuniasdecam · Manicura · Nails
+          </h3>
+
+          <p class="muted">
+            Imagen del cartel de la parte superior.
+          </p>
+
+          <label class="mini-upload">
+
+            <input
+              id="heroImageFile"
+              type="file"
+              accept="image/*"
+            >
+
+            ${
+              settings?.hero_image_url
+                ? 'Cambiar foto'
+                : 'Subir foto'
+            }
+
+          </label>
+
+          ${
+            settings?.hero_image_url
+              ? `
+                <button
+                  id="deleteHeroImage"
+                  class="text-delete"
+                  type="button"
+                >
+                  Eliminar foto
+                </button>
+              `
+              : ''
+          }
+
+          <p
+            id="heroImageMsg"
+            class="form-msg"
+          ></p>
+
+        </div>
+
+      </article>
+
+
+      <!-- DETALLE -->
+
+      <article class="featured-admin-card">
+
+        <div class="featured-admin-preview">
+
+          ${
+            settings?.detail_image_url
+              ? `
+                <img
+                  src="${esc(settings.detail_image_url)}"
+                  alt="Imagen detalle"
+                >
+              `
+              : `
+                <div class="featured-admin-empty">
+                  <span>＋</span>
+                  <small>Sin imagen</small>
+                </div>
+              `
+          }
+
+        </div>
+
+        <div class="featured-admin-content">
+
+          <p class="eyebrow">
+            DETALLE
+          </p>
+
+          <h3>
+            Imagen del bloque Detalle
+          </h3>
+
+          <p class="muted">
+            Imagen del bloque inferior de detalle.
+          </p>
+
+          <label class="mini-upload">
+
+            <input
+              id="detailImageFile"
+              type="file"
+              accept="image/*"
+            >
+
+            ${
+              settings?.detail_image_url
+                ? 'Cambiar foto'
+                : 'Subir foto'
+            }
+
+          </label>
+
+          ${
+            settings?.detail_image_url
+              ? `
+                <button
+                  id="deleteDetailImage"
+                  class="text-delete"
+                  type="button"
+                >
+                  Eliminar foto
+                </button>
+              `
+              : ''
+          }
+
+          <p
+            id="detailImageMsg"
+            class="form-msg"
+          ></p>
+
+        </div>
+
+      </article>
+
+    </div>
+  `;
+
+
+  /* =========================
+     SUBIR FOTO SUPERIOR
+  ========================= */
+
+  $('#heroImageFile').onchange =
+    async () => {
+
+      const file =
+        $('#heroImageFile').files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const imageMsg =
+        $('#heroImageMsg');
+
+      imageMsg.textContent =
+        'Subiendo…';
+
+      try {
+
+        if (settings?.hero_storage_path) {
+
+          await sb.storage
+            .from('cam-gallery')
+            .remove([
+              settings.hero_storage_path
+            ]);
+
+        }
+
+        const extension =
+          file.name
+            .split('.')
+            .pop()
+            .toLowerCase();
+
+        const path =
+          `featured/hero.${extension}`;
+
+        const url =
+          await uploadImage(
+            file,
+            path
+          );
+
+        const {
+          error
+        } = await sb
+          .from('cam_site_settings')
+          .update({
+            hero_image_url: url,
+            hero_storage_path: path,
+            updated_at:
+              new Date().toISOString()
+          })
+          .eq('id', 1);
+
+        if (error) {
+          throw error;
+        }
+
+        await refresh();
+
+      } catch (error) {
+
+        console.error(
+          'Error imagen superior:',
+          error
+        );
+
+        imageMsg.textContent =
+          error?.message ||
+          'No se pudo subir la foto.';
+
+      }
+
+    };
+
+
+  /* =========================
+     SUBIR FOTO DETALLE
+  ========================= */
+
+  $('#detailImageFile').onchange =
+    async () => {
+
+      const file =
+        $('#detailImageFile').files[0];
+
+      if (!file) {
+        return;
+      }
+
+      const imageMsg =
+        $('#detailImageMsg');
+
+      imageMsg.textContent =
+        'Subiendo…';
+
+      try {
+
+        if (settings?.detail_storage_path) {
+
+          await sb.storage
+            .from('cam-gallery')
+            .remove([
+              settings.detail_storage_path
+            ]);
+
+        }
+
+        const extension =
+          file.name
+            .split('.')
+            .pop()
+            .toLowerCase();
+
+        const path =
+          `featured/detail.${extension}`;
+
+        const url =
+          await uploadImage(
+            file,
+            path
+          );
+
+        const {
+          error
+        } = await sb
+          .from('cam_site_settings')
+          .update({
+            detail_image_url: url,
+            detail_storage_path: path,
+            updated_at:
+              new Date().toISOString()
+          })
+          .eq('id', 1);
+
+        if (error) {
+          throw error;
+        }
+
+        await refresh();
+
+      } catch (error) {
+
+        console.error(
+          'Error imagen detalle:',
+          error
+        );
+
+        imageMsg.textContent =
+          error?.message ||
+          'No se pudo subir la foto.';
+
+      }
+
+    };
+
+
+  /* =========================
+     ELIMINAR FOTO SUPERIOR
+  ========================= */
+
+  $('#deleteHeroImage')?.addEventListener(
+    'click',
+    async () => {
+
+      if (
+        !confirm(
+          '¿Eliminar la imagen del cartel superior?'
+        )
+      ) {
+        return;
+      }
+
+      try {
+
+        if (settings?.hero_storage_path) {
+
+          await sb.storage
+            .from('cam-gallery')
+            .remove([
+              settings.hero_storage_path
+            ]);
+
+        }
+
+        const {
+          error
+        } = await sb
+          .from('cam_site_settings')
+          .update({
+            hero_image_url: null,
+            hero_storage_path: null,
+            updated_at:
+              new Date().toISOString()
+          })
+          .eq('id', 1);
+
+        if (error) {
+          throw error;
+        }
+
+        await refresh();
+
+      } catch (error) {
+
+        alert(
+          error?.message ||
+          'No se pudo eliminar la foto.'
+        );
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     ELIMINAR FOTO DETALLE
+  ========================= */
+
+  $('#deleteDetailImage')?.addEventListener(
+    'click',
+    async () => {
+
+      if (
+        !confirm(
+          '¿Eliminar la imagen del bloque Detalle?'
+        )
+      ) {
+        return;
+      }
+
+      try {
+
+        if (settings?.detail_storage_path) {
+
+          await sb.storage
+            .from('cam-gallery')
+            .remove([
+              settings.detail_storage_path
+            ]);
+
+        }
+
+        const {
+          error
+        } = await sb
+          .from('cam_site_settings')
+          .update({
+            detail_image_url: null,
+            detail_storage_path: null,
+            updated_at:
+              new Date().toISOString()
+          })
+          .eq('id', 1);
+
+        if (error) {
+          throw error;
+        }
+
+        await refresh();
+
+      } catch (error) {
+
+        alert(
+          error?.message ||
+          'No se pudo eliminar la foto.'
+        );
+
+      }
+
+    }
+  );
 
 
   /* =========================
