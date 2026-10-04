@@ -60,7 +60,7 @@ const [
     sb
       .from('cam_services')
       .select(
-        'id,name,description,image_url,sort_order'
+        'id,name,description,image_url,sort_order,image_zoom,image_position_x,image_position_y'
       )
       .order(
         'sort_order',
@@ -206,7 +206,20 @@ if (se) {
             ${
               x.image_url
                 ? `
-                  <div class="service-image">
+                  <div
+                    class="service-image"
+                    style="
+                      --service-zoom:${Number(
+                        x.image_zoom ?? 1
+                      )};
+                      --service-x:${Number(
+                        x.image_position_x ?? 50
+                      )}%;
+                      --service-y:${Number(
+                        x.image_position_y ?? 50
+                      )}%;
+                    "
+                  >
 
                     <img
                       loading="lazy"
