@@ -12,11 +12,13 @@ const sb =
     SUPABASE_KEY
   );
 
+
 const gallery =
   document.querySelector('#gallery');
 
 const services =
   document.querySelector('#services');
+
 
 const esc =
   s =>
@@ -246,24 +248,70 @@ if (settings) {
 
 
   /* =========================
-     IMAGEN SUPERIOR
+     IMAGEN CARTEL SUPERIOR
   ========================= */
 
-  if (settings.hero_image_url) {
+  const heroImage =
+    document.querySelector(
+      '#heroImage'
+    );
 
-    const heroImage =
-      document.querySelector(
-        '#heroImage'
-      );
+  const heroCard =
+    document.querySelector(
+      '#heroCard'
+    );
 
-    if (heroImage) {
+  const heroCardContent =
+    document.querySelector(
+      '#heroCardContent'
+    );
 
-      heroImage.src =
-        settings.hero_image_url;
 
-      heroImage.classList.add(
-        'has-image'
-      );
+  if (
+    heroImage &&
+    heroCard &&
+    settings.hero_image_url
+  ) {
+
+    heroImage.src =
+      settings.hero_image_url;
+
+    heroImage.style.display =
+      'block';
+
+    heroImage.style.width =
+      '100%';
+
+    heroImage.style.height =
+      '100%';
+
+    heroImage.style.objectFit =
+      'cover';
+
+    heroImage.style.position =
+      'absolute';
+
+    heroImage.style.inset =
+      '0';
+
+    heroImage.style.borderRadius =
+      'inherit';
+
+
+    heroCard.style.position =
+      'relative';
+
+    heroCard.style.overflow =
+      'hidden';
+
+
+    if (heroCardContent) {
+
+      heroCardContent.style.position =
+        'relative';
+
+      heroCardContent.style.zIndex =
+        '2';
 
     }
 
@@ -274,21 +322,67 @@ if (settings) {
      IMAGEN DETALLE
   ========================= */
 
-  if (settings.detail_image_url) {
+  const detailImage =
+    document.querySelector(
+      '#detailImage'
+    );
 
-    const detailImage =
-      document.querySelector(
-        '#detailImage'
-      );
+  const detailCard =
+    document.querySelector(
+      '#detailCard'
+    );
 
-    if (detailImage) {
+  const detailCardContent =
+    document.querySelector(
+      '#detailCardContent'
+    );
 
-      detailImage.src =
-        settings.detail_image_url;
 
-      detailImage.classList.add(
-        'has-image'
-      );
+  if (
+    detailImage &&
+    detailCard &&
+    settings.detail_image_url
+  ) {
+
+    detailImage.src =
+      settings.detail_image_url;
+
+    detailImage.style.display =
+      'block';
+
+    detailImage.style.width =
+      '100%';
+
+    detailImage.style.height =
+      '100%';
+
+    detailImage.style.objectFit =
+      'cover';
+
+    detailImage.style.position =
+      'absolute';
+
+    detailImage.style.inset =
+      '0';
+
+    detailImage.style.borderRadius =
+      'inherit';
+
+
+    detailCard.style.position =
+      'relative';
+
+    detailCard.style.overflow =
+      'hidden';
+
+
+    if (detailCardContent) {
+
+      detailCardContent.style.position =
+        'relative';
+
+      detailCardContent.style.zIndex =
+        '2';
 
     }
 
