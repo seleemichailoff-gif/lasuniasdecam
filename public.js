@@ -4,13 +4,10 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
   'sb_publishable_3W1TRYwdtncqHEBe8BjIUw_9sYl2Cce';
 
-
 const sb =
-  (
-    await import(
-      'https://esm.sh/@supabase/supabase-js@2'
-    )
-  ).createClient(
+  (await import(
+    'https://esm.sh/@supabase/supabase-js@2'
+  )).createClient(
     SUPABASE_URL,
     SUPABASE_KEY
   );
@@ -21,6 +18,9 @@ const gallery =
 
 const services =
   document.querySelector('#services');
+
+const galleryToggle =
+  document.querySelector('#galleryToggle');
 
 
 const esc =
@@ -38,10 +38,6 @@ const [
   { data: settings }
 ] =
   await Promise.all([
-
-    /* =========================
-       GALERÍA
-    ========================= */
 
     sb
       .from('cam_gallery')
@@ -61,11 +57,6 @@ const [
         }
       ),
 
-
-    /* =========================
-       SERVICIOS
-    ========================= */
-
     sb
       .from('cam_services')
       .select(
@@ -77,11 +68,6 @@ const [
           ascending: true
         }
       ),
-
-
-    /* =========================
-       CONFIGURACIÓN
-    ========================= */
 
     sb
       .from('cam_site_settings')
@@ -96,6 +82,9 @@ const [
    GALERÍA
 ========================= */
 
+let galleryExpanded = false;
+
+
 if (ge) {
 
   gallery.innerHTML =
@@ -108,25 +97,84 @@ if (ge) {
 
 } else {
 
-  gallery.innerHTML =
-    g
-      .map(
-        x => `
-          <figure class="gallery-item">
+  const renderGallery = () => {
 
-            <img
-              loading="lazy"
-              src="${esc(x.image_url)}"
-              alt="${esc(
-                x.alt_text ||
-                'Trabajo de uñas'
-              )}"
-            >
+    const visiblePhotos =
+      galleryExpanded
+        ? g
+        : g.slice(0, 8);
 
-          </figure>
-        `
-      )
-      .join('');
+
+    gallery.innerHTML =
+      visiblePhotos
+        .map(
+          x => `
+            <figure class="gallery-item">
+
+              <img
+                loading="lazy"
+                src="${esc(x.image_url)}"
+                alt="${esc(
+                  x.alt_text ||
+                  'Trabajo de uñas'
+                )}"
+              >
+
+            </figure>
+          `
+        )
+        .join('');
+
+  };
+
+
+  renderGallery();
+
+
+  if (
+    galleryToggle &&
+    g.length > 8
+  ) {
+
+    galleryToggle.style.display =
+      'inline-flex';
+
+    galleryToggle.textContent =
+      'Ver todos los trabajos';
+
+
+    galleryToggle.addEventListener(
+      'click',
+      () => {
+
+        galleryExpanded =
+          !galleryExpanded;
+
+
+        renderGallery();
+
+
+        galleryToggle.textContent =
+          galleryExpanded
+            ? 'Ver menos trabajos'
+            : 'Ver todos los trabajos';
+
+
+        if (!galleryExpanded) {
+
+          document
+            .querySelector('.gallery')
+            ?.scrollIntoView({
+              behavior:'smooth',
+              block:'start'
+            });
+
+        }
+
+      }
+    );
+
+  }
 
 }
 
@@ -213,10 +261,6 @@ if (settings) {
     'https://www.instagram.com/lasuniasdecam/';
 
 
-  /* =========================
-     INSTAGRAM
-  ========================= */
-
   document
     .querySelectorAll(
       'a[href*="instagram.com/lasuniasdecam"]'
@@ -228,10 +272,6 @@ if (settings) {
     );
 
 
-  /* =========================
-     UBICACIÓN
-  ========================= */
-
   if (settings.location) {
 
     const location =
@@ -242,16 +282,13 @@ if (settings) {
     if (location) {
 
       location.textContent =
+        '♡ ' +
         settings.location;
 
     }
 
   }
 
-
-  /* =========================
-     CONTACTO
-  ========================= */
 
   if (settings.phone || ig) {
 
@@ -276,7 +313,7 @@ if (settings) {
 
 
   /* =========================
-     LOGO / IMAGEN HERO
+     IMAGEN CARTEL SUPERIOR
   ========================= */
 
   const heroImage =
@@ -284,14 +321,64 @@ if (settings) {
       '#heroImage'
     );
 
+  const heroCard =
+    document.querySelector(
+      '#heroCard'
+    );
+
+  const heroCardContent =
+    document.querySelector(
+      '#heroCardContent'
+    );
+
 
   if (
     heroImage &&
+    heroCard &&
     settings.hero_image_url
   ) {
 
     heroImage.src =
       settings.hero_image_url;
+
+    heroImage.style.display =
+      'block';
+
+    heroImage.style.width =
+      '100%';
+
+    heroImage.style.height =
+      '100%';
+
+    heroImage.style.objectFit =
+      'cover';
+
+    heroImage.style.position =
+      'absolute';
+
+    heroImage.style.inset =
+      '0';
+
+    heroImage.style.borderRadius =
+      'inherit';
+
+
+    heroCard.style.position =
+      'relative';
+
+    heroCard.style.overflow =
+      'hidden';
+
+
+    if (heroCardContent) {
+
+      heroCardContent.style.position =
+        'relative';
+
+      heroCardContent.style.zIndex =
+        '2';
+
+    }
 
   }
 
@@ -310,6 +397,11 @@ if (settings) {
       '#detailCard'
     );
 
+  const detailCardContent =
+    document.querySelector(
+      '#detailCardContent'
+    );
+
 
   if (
     detailImage &&
@@ -323,9 +415,41 @@ if (settings) {
     detailImage.style.display =
       'block';
 
-    detailCard.classList.add(
-      'has-detail-image'
-    );
+    detailImage.style.width =
+      '100%';
+
+    detailImage.style.height =
+      '100%';
+
+    detailImage.style.objectFit =
+      'cover';
+
+    detailImage.style.position =
+      'absolute';
+
+    detailImage.style.inset =
+      '0';
+
+    detailImage.style.borderRadius =
+      'inherit';
+
+
+    detailCard.style.position =
+      'relative';
+
+    detailCard.style.overflow =
+      'hidden';
+
+
+    if (detailCardContent) {
+
+      detailCardContent.style.position =
+        'relative';
+
+      detailCardContent.style.zIndex =
+        '2';
+
+    }
 
   }
 
