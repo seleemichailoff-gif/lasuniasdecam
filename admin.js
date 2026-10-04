@@ -1000,31 +1000,13 @@ async function refresh() {
       .map(
         (x) => {
 
-          const zoom =
-            Number(x.image_zoom ?? 1);
-
-          const positionX =
-            Number(
-              x.image_position_x ?? 50
-            );
-
-          const positionY =
-            Number(
-              x.image_position_y ?? 50
-            );
-
           return `
             <article
               class="service-admin-card"
               data-id="${esc(x.id)}"
             >
 
-              <div
-                class="service-admin-image service-crop-preview"
-                data-zoom="${zoom}"
-                data-x="${positionX}"
-                data-y="${positionY}"
-              >
+              <div class="service-admin-image">
 
                 ${
                   x.image_url
@@ -1075,109 +1057,13 @@ async function refresh() {
                 ${
                   x.image_url
                     ? `
-                      <div class="service-crop-controls">
+                      <button
+                        class="service-adjust"
+                        type="button"
+                      >
+                        Ajustar foto
+                      </button>
 
-                        <div class="service-crop-head">
-                          <strong>
-                            Ajustar encuadre
-                          </strong>
-
-                          <button
-                            class="service-reset-crop"
-                            type="button"
-                          >
-                            Restablecer
-                          </button>
-                        </div>
-
-
-                        <label class="crop-control">
-
-                          <span>
-                            Zoom
-                            <output class="zoom-value">
-                              ${zoom.toFixed(2)}×
-                            </output>
-                          </span>
-
-                          <input
-                            class="service-zoom"
-                            type="range"
-                            min="1"
-                            max="2.5"
-                            step="0.01"
-                            value="${zoom}"
-                          >
-
-                        </label>
-
-
-                        <label class="crop-control">
-
-                          <span>
-                            Horizontal
-                            <output class="x-value">
-                              ${Math.round(positionX)}%
-                            </output>
-                          </span>
-
-                          <input
-                            class="service-x"
-                            type="range"
-                            min="0"
-                            max="100"
-                            step="1"
-                            value="${positionX}"
-                          >
-
-                        </label>
-
-
-                        <label class="crop-control">
-
-                          <span>
-                            Vertical
-                            <output class="y-value">
-                              ${Math.round(positionY)}%
-                            </output>
-                          </span>
-
-                          <input
-                            class="service-y"
-                            type="range"
-                            min="0"
-                            max="100"
-                            step="1"
-                            value="${positionY}"
-                          >
-
-                        </label>
-
-
-                        <p class="crop-help">
-                          Usá los controles para centrar la foto.
-                        </p>
-
-
-                        <button
-                          class="service-save-crop"
-                          type="button"
-                        >
-                          Guardar encuadre
-                        </button>
-
-
-                        <p class="form-msg crop-msg"></p>
-
-                      </div>
-                    `
-                    : ''
-                }
-
-
-                ${
-                  x.image_url
-                    ? `
                       <button
                         class="text-delete service-delete"
                         type="button"
@@ -1187,6 +1073,140 @@ async function refresh() {
                     `
                     : ''
                 }
+
+
+                <div
+                  class="service-crop-editor"
+                  hidden
+                >
+
+                  <div class="service-crop-preview">
+
+                    <img
+                      src="${esc(x.image_url || '')}"
+                      alt=""
+                    >
+
+                  </div>
+
+
+                  <div class="service-crop-tools">
+
+                    <div class="service-crop-title">
+                      <strong>Ajustar encuadre</strong>
+
+                      <button
+                        class="service-close-adjust"
+                        type="button"
+                      >
+                        Cerrar
+                      </button>
+                    </div>
+
+
+                    <label class="crop-control">
+
+                      <span>
+                        Zoom
+                        <output class="zoom-value">
+                          ${Number(
+                            x.image_zoom ?? 1
+                          ).toFixed(2)}×
+                        </output>
+                      </span>
+
+                      <input
+                        class="service-zoom"
+                        type="range"
+                        min="1"
+                        max="2.5"
+                        step="0.01"
+                        value="${Number(
+                          x.image_zoom ?? 1
+                        )}"
+                      >
+
+                    </label>
+
+
+                    <label class="crop-control">
+
+                      <span>
+                        Horizontal
+                        <output class="x-value">
+                          ${Math.round(
+                            Number(
+                              x.image_position_x ?? 50
+                            )
+                          )}%
+                        </output>
+                      </span>
+
+                      <input
+                        class="service-x"
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="1"
+                        value="${Number(
+                          x.image_position_x ?? 50
+                        )}"
+                      >
+
+                    </label>
+
+
+                    <label class="crop-control">
+
+                      <span>
+                        Vertical
+                        <output class="y-value">
+                          ${Math.round(
+                            Number(
+                              x.image_position_y ?? 50
+                            )
+                          )}%
+                        </output>
+                      </span>
+
+                      <input
+                        class="service-y"
+                        type="range"
+                        min="0"
+                        max="100"
+                        step="1"
+                        value="${Number(
+                          x.image_position_y ?? 50
+                        )}"
+                      >
+
+                    </label>
+
+
+                    <div class="service-crop-actions">
+
+                      <button
+                        class="service-reset-crop"
+                        type="button"
+                      >
+                        Restablecer
+                      </button>
+
+                      <button
+                        class="service-save-crop"
+                        type="button"
+                      >
+                        Guardar encuadre
+                      </button>
+
+                    </div>
+
+
+                    <p class="form-msg crop-msg"></p>
+
+                  </div>
+
+                </div>
 
 
                 <p
@@ -1203,7 +1223,7 @@ async function refresh() {
 
 
   /* =========================
-     ACTUALIZAR PREVIEW
+     EDITOR DE ENCUADRE
   ========================= */
 
   document
@@ -1213,10 +1233,28 @@ async function refresh() {
     .forEach(
       (card) => {
 
+        const editor =
+          card.querySelector(
+            '.service-crop-editor'
+          );
+
+        const openButton =
+          card.querySelector(
+            '.service-adjust'
+          );
+
+        const closeButton =
+          card.querySelector(
+            '.service-close-adjust'
+          );
+
         const preview =
           card.querySelector(
             '.service-crop-preview'
           );
+
+        const previewImg =
+          preview?.querySelector('img');
 
         const zoomInput =
           card.querySelector(
@@ -1248,8 +1286,12 @@ async function refresh() {
             '.y-value'
           );
 
+
         if (
+          !editor ||
+          !openButton ||
           !preview ||
+          !previewImg ||
           !zoomInput ||
           !xInput ||
           !yInput
@@ -1276,52 +1318,65 @@ async function refresh() {
                 yInput.value
               );
 
-            preview.dataset.zoom =
-              zoom;
 
-            preview.dataset.x =
-              x;
+            previewImg.style.objectPosition =
+              `${x}% ${y}%`;
 
-            preview.dataset.y =
-              y;
+            previewImg.style.transform =
+              `scale(${zoom})`;
 
-            preview.style.setProperty(
-              '--crop-zoom',
-              zoom
-            );
-
-            preview.style.setProperty(
-              '--crop-x',
-              `${x}%`
-            );
-
-            preview.style.setProperty(
-              '--crop-y',
-              `${y}%`
-            );
 
             if (zoomValue) {
-              zoomValue.value =
-                `${zoom.toFixed(2)}×`;
               zoomValue.textContent =
                 `${zoom.toFixed(2)}×`;
             }
 
             if (xValue) {
-              xValue.value =
-                `${Math.round(x)}%`;
               xValue.textContent =
                 `${Math.round(x)}%`;
             }
 
             if (yValue) {
-              yValue.value =
-                `${Math.round(y)}%`;
               yValue.textContent =
                 `${Math.round(y)}%`;
             }
 
           };
+
+
+        openButton.addEventListener(
+          'click',
+          () => {
+
+            editor.hidden =
+              false;
+
+            openButton.textContent =
+              'Cerrar ajuste';
+
+            updatePreview();
+
+            editor.scrollIntoView({
+              behavior:'smooth',
+              block:'nearest'
+            });
+
+          }
+        );
+
+
+        closeButton?.addEventListener(
+          'click',
+          () => {
+
+            editor.hidden =
+              true;
+
+            openButton.textContent =
+              'Ajustar foto';
+
+          }
+        );
 
 
         zoomInput.addEventListener(
@@ -1340,116 +1395,115 @@ async function refresh() {
         );
 
 
-        updatePreview();
-
-
-        /* =========================
-           RESET
-        ========================= */
-
-        const reset =
-          card.querySelector(
+        card
+          .querySelector(
             '.service-reset-crop'
-          );
+          )
+          ?.addEventListener(
+            'click',
+            () => {
 
-        reset?.addEventListener(
-          'click',
-          () => {
+              zoomInput.value =
+                '1';
 
-            zoomInput.value = '1';
-            xInput.value = '50';
-            yInput.value = '50';
+              xInput.value =
+                '50';
 
-            updatePreview();
+              yInput.value =
+                '50';
 
-          }
-        );
-
-
-        /* =========================
-           GUARDAR ENCUADRE
-        ========================= */
-
-        const save =
-          card.querySelector(
-            '.service-save-crop'
-          );
-
-        save?.addEventListener(
-          'click',
-          async () => {
-
-            const id =
-              card.dataset.id;
-
-            const cropMsg =
-              card.querySelector(
-                '.crop-msg'
-              );
-
-            const zoom =
-              Number(
-                zoomInput.value
-              );
-
-            const x =
-              Number(
-                xInput.value
-              );
-
-            const y =
-              Number(
-                yInput.value
-              );
-
-            cropMsg.textContent =
-              'Guardando…';
-
-            try {
-
-              const {
-                error
-              } = await sb
-                .from('cam_services')
-                .update({
-                  image_zoom: zoom,
-                  image_position_x: x,
-                  image_position_y: y,
-                  updated_at:
-                    new Date().toISOString()
-                })
-                .eq('id', id);
-
-              if (error) {
-                throw error;
-              }
-
-              cropMsg.textContent =
-                'Encuadre guardado.';
-
-              setTimeout(
-                () => {
-                  cropMsg.textContent =
-                    '';
-                },
-                2200
-              );
-
-            } catch (error) {
-
-              console.error(
-                'Error guardando encuadre:',
-                error
-              );
-
-              cropMsg.textContent =
-                error?.message ||
-                'No se pudo guardar el encuadre.';
+              updatePreview();
 
             }
+          );
 
-          }
-        );
+
+        card
+          .querySelector(
+            '.service-save-crop'
+          )
+          ?.addEventListener(
+            'click',
+            async () => {
+
+              const id =
+                card.dataset.id;
+
+              const cropMsg =
+                card.querySelector(
+                  '.crop-msg'
+                );
+
+              const zoom =
+                Number(
+                  zoomInput.value
+                );
+
+              const x =
+                Number(
+                  xInput.value
+                );
+
+              const y =
+                Number(
+                  yInput.value
+                );
+
+
+              cropMsg.textContent =
+                'Guardando…';
+
+
+              try {
+
+                const {
+                  error
+                } = await sb
+                  .from('cam_services')
+                  .update({
+                    image_zoom: zoom,
+                    image_position_x: x,
+                    image_position_y: y,
+                    updated_at:
+                      new Date().toISOString()
+                  })
+                  .eq('id', id);
+
+
+                if (error) {
+                  throw error;
+                }
+
+
+                cropMsg.textContent =
+                  'Encuadre guardado.';
+
+                setTimeout(
+                  () => {
+
+                    cropMsg.textContent =
+                      '';
+
+                  },
+                  2200
+                );
+
+
+              } catch (error) {
+
+                console.error(
+                  'Error guardando encuadre:',
+                  error
+                );
+
+                cropMsg.textContent =
+                  error?.message ||
+                  'No se pudo guardar el encuadre.';
+
+              }
+
+            }
+          );
 
       }
     );
